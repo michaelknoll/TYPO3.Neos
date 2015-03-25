@@ -218,6 +218,10 @@ define(
 			ContentModule.one('pageLoaded', function() {
 				that.set('refreshOnPageNodePathChanged', false);
 			});
+		},
+
+		renderNodeTreeErrorMessage: function(reason) {
+			return 'Structured Content Tree loading error: ' + reason.response.error.message;
 		}
 	});
 });

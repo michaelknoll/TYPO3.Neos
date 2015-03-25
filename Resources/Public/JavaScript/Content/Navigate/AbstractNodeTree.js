@@ -1057,7 +1057,7 @@ define(
 					this.baseNodeType,
 					depth,
 					this.get('pageNodePath')
-				).then(
+				).disableErrorHandling().then(
 					function(result) {
 						node._currentlySendingServerRequest = false;
 						node.setLazyNodeStatus(that.statusCodes.ok);
@@ -1072,11 +1072,15 @@ define(
 							}
 						}
 					},
-					function() {
+					function(reason) {
 						node.setLazyNodeStatus(that.statusCodes.error);
-						Notification.error('Node Tree loading error.');
+						Notification.error(that.renderNodeTreeErrorMessage(reason));
 					}
 				);
+			},
+
+			renderNodeTreeErrorMessage: function(reason) {
+				return 'Node Tree loading error: ' + reason.response.error.message;
 			}
 		});
 	}

@@ -113,7 +113,7 @@ define([
 				console.log('HttpClient', requestMethod, url, options);
 			}
 
-			var request,
+			var request, defaultErrorHandlingEnabled = true,
 				promise = Ember.RSVP.Promise(function(resolve, reject) {
 					options = $.extend(options, {
 						success: function(data, textStatus, xhr) {
@@ -139,7 +139,14 @@ define([
 								});
 							} else {
 								that.set('_failedRequest', true);
-								that.trigger('failure', xhr, textStatus, errorThrown);
+
+								// Default Error Handling
+								if (defaultErrorHandlingEnabled) {
+									that.trigger('failure', xhr, textStatus, errorThrown);
+								}
+
+
+								// Fail the promise
 								that._fail(reject, xhr, textStatus, errorThrown);
 							}
 						}
@@ -158,7 +165,14 @@ define([
 				request.abort();
 			};
 
+			promise.disableErrorHandling = function() {
+				defaultErrorHandlingEnabled = false;
+
+				return promise;
+			};
+
 			return promise;
+
 		},
 
 		_success: function(resolve, data, textStatus, xhr) {
@@ -169,7 +183,8 @@ define([
 			reject({
 				'xhr': xhr,
 				'status': textStatus,
-				'message': errorThrown
+				'message': errorThrown,
+				'response': xhr.responseJSON
 			});
 		}
 	});

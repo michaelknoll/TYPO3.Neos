@@ -1,6 +1,7 @@
 For building the file jquery-with-dependecies in `TYPO3.Neos/Resources/Public/Library` it is necessary to install
 node.js and grunt
 
+
 Node.Js
 =======
 
@@ -8,6 +9,7 @@ Visit the project homepage [http://nodejs.org/](http://nodejs.org/) and download
 
 Click on "install" and the right version for your OS will be downloaded and a installer will be started.
 Use the default configuration
+
 
 Grunt
 =====
@@ -22,14 +24,19 @@ To install grunt for running the Neos commands, you install the node modules int
 	cd Packages/Application/TYPO3.Neos/Scripts
 	npm install
 
+
 Grunt Tasks
 -----------
 
-* grunt concat
+* `grunt build-js`
 
-	This command concatenates all JavaScript sources into the minified files we include into Neos.
+	This command builds all JavaScript sources, i.e. the minified files we include into Neos
 
-* grunt docs
+* `grunt concat`
+
+	This command concatenates all JavaScript sources
+
+* `grunt docs`
 
 	Renders the documentation. (This command needs sphinx-builds and OmniGraffle 5 Professional installed)
 
